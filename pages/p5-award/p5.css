@@ -1,0 +1,143 @@
+/* ============================================
+   p5.css — 授旗领奖样式
+   ============================================ */
+
+/* === 移动端 === */
+@media (max-width: 767px) {
+  .p5-bg {
+    background: linear-gradient(180deg,
+      #1a1a0a 0%,
+      #2a2a10 30%,
+      #3a3a1a 60%,
+      #1a1a0a 100%
+    );
+  }
+
+  .p5-content {
+    justify-content: center;
+    gap: var(--sp-lg);
+  }
+
+  .p5-phase {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-lg);
+  }
+
+  /* 统计数据 */
+  .p5-stats {
+    display: flex;
+    gap: var(--sp-lg);
+  }
+
+  .p5-stat {
+    text-align: center;
+    background: rgba(255,255,255,0.1);
+    border-radius: var(--radius-md);
+    padding: var(--sp-md);
+    min-width: 80px;
+  }
+
+  .p5-stat-num {
+    display: block;
+    font-family: var(--font-number);
+    font-size: var(--fs-xl);
+    font-weight: 700;
+    color: var(--c-accent);
+  }
+
+  .p5-stat-label {
+    font-size: var(--fs-xs);
+    color: rgba(255,255,255,0.6);
+  }
+
+  .p5-submit-btn {
+    animation: pulse-btn 2s ease infinite;
+  }
+
+  @keyframes pulse-btn {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0.4); }
+    50% { box-shadow: 0 0 0 16px rgba(26, 115, 232, 0); }
+  }
+
+  /* 分享区 */
+  .p5-share-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-md);
+    text-align: center;
+    animation: fadeInUp 0.6s ease;
+  }
+}
+
+/* === 桌面端 === */
+@media (min-width: 768px) {
+  .p5-bg {
+    background: linear-gradient(135deg,
+      #1a1a0a 0%,
+      #2a2a10 40%,
+      #3a3a1a 70%,
+      #1a1a0a 100%
+    );
+  }
+
+  .p5-content {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--sp-xl);
+  }
+
+  .p5-phase {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-xl);
+  }
+
+  .p5-stats {
+    display: flex;
+    gap: var(--sp-xl);
+  }
+
+  .p5-stat {
+    text-align: center;
+    background: rgba(255,255,255,0.1);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-lg);
+    min-width: 120px;
+  }
+
+  .p5-stat-num {
+    display: block;
+    font-family: var(--font-number);
+    font-size: var(--fs-2xl);
+    font-weight: 700;
+    color: var(--c-accent);
+  }
+
+  .p5-stat-label {
+    font-size: var(--fs-sm);
+    color: rgba(255,255,255,0.6);
+  }
+
+  .p5-submit-btn {
+    animation: pulse-btn 2s ease infinite;
+  }
+
+  @keyframes pulse-btn {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0.4); }
+    50% { box-shadow: 0 0 0 16px rgba(26, 115, 232, 0); }
+  }
+
+  .p5-share-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-lg);
+    text-align: center;
+    animation: fadeInUp 0.6s ease;
+  }
+}

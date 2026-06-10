@@ -1,0 +1,210 @@
+/* ============================================
+   p2.css — 灾情简介样式
+   ============================================ */
+
+/* === 移动端 === */
+@media (max-width: 767px) {
+  .p2-bg {
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  }
+
+  .p2-content {
+    justify-content: flex-start;
+    padding-top: 10vh;
+    gap: var(--sp-md);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .p2-header {
+    text-align: center;
+  }
+
+  .p2-chart {
+    background: rgba(255,255,255,0.08);
+    border-radius: var(--radius-md);
+    padding: var(--sp-md) var(--sp-lg);
+  }
+
+  .chart-bars {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 3rem;
+    height: 200px;
+    padding-top: var(--sp-md);
+  }
+
+  .chart-bar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .chart-bar {
+    width: 48px;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    position: relative;
+    transition: height 1s ease;
+  }
+
+  .chart-bar.extreme {
+    background: linear-gradient(180deg, #ff4444 0%, #d93025 100%);
+  }
+
+  .chart-bar.normal {
+    background: linear-gradient(180deg, #4a90d9 0%, #2a60a9 100%);
+  }
+
+  .bar-value {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-number);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+
+  .bar-label {
+    font-size: var(--fs-xs);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .chart-note {
+    text-align: center;
+    color: var(--c-warning);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    margin-top: var(--sp-sm);
+  }
+
+  .p2-summary {
+    font-size: var(--fs-sm);
+    color: rgba(255,255,255,0.8);
+    text-align: center;
+    line-height: 1.8;
+    max-width: 320px;
+    background: rgba(255,255,255,0.08);
+    border-radius: var(--radius-md);
+    padding: var(--sp-md);
+  }
+}
+
+/* === 桌面端 === */
+@media (min-width: 768px) {
+  .p2-bg {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  }
+
+  .p2-content {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 4vh 10vw;
+    gap: var(--sp-lg);
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .p2-header {
+    text-align: left;
+  }
+
+  .p2-header .page-title {
+    text-align: left;
+    font-size: var(--fs-3xl);
+  }
+
+  .p2-header .page-subtitle {
+    text-align: left;
+    font-size: var(--fs-base);
+  }
+
+  /* 数据卡片区 + 图表区 水平排列 */
+  .p2-content .stat-cards {
+    flex-direction: row;
+    gap: var(--sp-lg);
+    width: 100%;
+  }
+
+  .p2-chart {
+    background: rgba(255,255,255,0.08);
+    border-radius: var(--radius-md);
+    padding: var(--sp-lg) var(--sp-xl);
+    width: 100%;
+  }
+
+  .chart-bars {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 5rem;
+    height: 220px;
+    padding-top: var(--sp-md);
+  }
+
+  .chart-bar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .chart-bar {
+    width: 64px;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    position: relative;
+    transition: height 1s ease;
+  }
+
+  .chart-bar.extreme {
+    background: linear-gradient(180deg, #ff4444 0%, #d93025 100%);
+  }
+
+  .chart-bar.normal {
+    background: linear-gradient(180deg, #4a90d9 0%, #2a60a9 100%);
+  }
+
+  .bar-value {
+    position: absolute;
+    top: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-number);
+    font-size: var(--fs-base);
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+
+  .bar-label {
+    font-size: var(--fs-sm);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .chart-note {
+    text-align: center;
+    color: var(--c-warning);
+    font-size: var(--fs-base);
+    font-weight: 500;
+    margin-top: var(--sp-sm);
+  }
+
+  .p2-summary {
+    font-size: var(--fs-base);
+    color: rgba(255,255,255,0.8);
+    line-height: 1.8;
+    max-width: 700px;
+    background: rgba(255,255,255,0.08);
+    border-radius: var(--radius-md);
+    padding: var(--sp-lg);
+  }
+}

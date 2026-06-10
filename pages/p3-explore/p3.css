@@ -1,0 +1,250 @@
+/* ============================================
+   p3.css — 寻找救援道具样式
+   ============================================ */
+
+/* === 移动端 === */
+@media (max-width: 767px) {
+  .p3-bg {
+    background: linear-gradient(180deg, #2d2416 0%, #3d3020 30%, #4a3828 60%, #2d2416 100%);
+  }
+
+  .p3-content {
+    justify-content: center;
+    gap: var(--sp-md);
+    padding-top: 5vh;
+  }
+
+  .p3-header {
+    text-align: center;
+  }
+
+  /* 场景容器 */
+  .p3-scene {
+    position: relative;
+    width: 320px;
+    height: 280px;
+    background: rgba(0,0,0,0.3);
+    border-radius: var(--radius-lg);
+    border: 2px solid rgba(255,255,255,0.1);
+    overflow: hidden;
+  }
+
+  /* 杂物 */
+  .debris-item {
+    position: absolute;
+    font-size: 2.5rem;
+    transition: all 0.4s ease;
+    pointer-events: none;
+  }
+
+  .debris-item.cleared {
+    opacity: 0;
+    transform: scale(0) rotate(45deg);
+  }
+
+  /* 找到的哨子 */
+  .found-whistle {
+    position: absolute;
+    top: 42%;
+    left: 38%;
+    font-size: 3.5rem;
+    animation: glow-pulse 1s ease infinite;
+    cursor: pointer;
+    z-index: 5;
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% { filter: drop-shadow(0 0 8px #ffd700); transform: scale(1); }
+    50% { filter: drop-shadow(0 0 20px #ffd700); transform: scale(1.15); }
+  }
+
+  /* 被困人员 */
+  .trapped-person {
+    position: absolute;
+    bottom: 40px;
+    right: 30px;
+    text-align: center;
+    color: white;
+    animation: fadeIn 0.8s ease;
+  }
+
+  .trapped-person p {
+    font-size: var(--fs-sm);
+    margin-top: 4px;
+    font-weight: 600;
+  }
+
+  /* 提示 */
+  .p3-hint {
+    text-align: center;
+  }
+
+  .p3-hint-text {
+    color: rgba(255,255,255,0.6);
+    font-size: var(--fs-sm);
+  }
+
+  .p3-progress {
+    font-size: var(--fs-xs);
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* 滑动清理 */
+  .p3-swipe-zone {
+    text-align: center;
+    width: 100%;
+  }
+
+  .p3-swipe-zone p {
+    color: rgba(255,255,255,0.8);
+    font-size: var(--fs-sm);
+    margin-bottom: 8px;
+  }
+
+  .swipe-track {
+    width: 280px;
+    height: 48px;
+    background: rgba(255,255,255,0.1);
+    border-radius: var(--radius-full);
+    position: relative;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .swipe-thumb {
+    width: 40px;
+    height: 40px;
+    background: var(--c-accent);
+    border-radius: 50%;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    cursor: grab;
+    transition: left 0.1s linear;
+    touch-action: pan-x;
+  }
+
+  .swipe-thumb:active {
+    cursor: grabbing;
+  }
+}
+
+/* === 桌面端 === */
+@media (min-width: 768px) {
+  .p3-bg {
+    background: linear-gradient(135deg, #2d2416 0%, #3d3020 50%, #4a3828 100%);
+  }
+
+  .p3-content {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--sp-2xl);
+    padding: 0 8vw;
+  }
+
+  /* 左侧场景 */
+  .p3-scene {
+    flex: 0 0 420px;
+    height: 380px;
+    position: relative;
+    background: rgba(0,0,0,0.3);
+    border-radius: var(--radius-lg);
+    border: 2px solid rgba(255,255,255,0.1);
+    overflow: hidden;
+  }
+
+  /* 右侧信息 */
+  .p3-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-lg);
+    max-width: 360px;
+  }
+
+  .p3-header {
+    text-align: left;
+  }
+
+  .p3-header .page-title {
+    text-align: left;
+    font-size: var(--fs-2xl);
+  }
+
+  .debris-item {
+    position: absolute;
+    font-size: 3rem;
+    transition: all 0.4s ease;
+    pointer-events: none;
+  }
+
+  .debris-item.cleared {
+    opacity: 0;
+    transform: scale(0) rotate(45deg);
+  }
+
+  .found-whistle {
+    position: absolute;
+    top: 42%;
+    left: 38%;
+    font-size: 4rem;
+    animation: glow-pulse 1s ease infinite;
+    cursor: pointer;
+    z-index: 5;
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% { filter: drop-shadow(0 0 8px #ffd700); transform: scale(1); }
+    50% { filter: drop-shadow(0 0 20px #ffd700); transform: scale(1.15); }
+  }
+
+  .trapped-person {
+    position: absolute;
+    bottom: 50px;
+    right: 40px;
+    text-align: center;
+    color: white;
+    animation: fadeIn 0.8s ease;
+  }
+
+  .p3-hint-text {
+    color: rgba(255,255,255,0.6);
+    font-size: var(--fs-base);
+  }
+
+  .p3-progress {
+    font-size: var(--fs-sm);
+    color: rgba(255,255,255,0.5);
+  }
+
+  .p3-swipe-zone {
+    width: 100%;
+  }
+
+  .p3-swipe-zone p {
+    color: rgba(255,255,255,0.8);
+    font-size: var(--fs-base);
+    margin-bottom: 8px;
+  }
+
+  .swipe-track {
+    width: 320px;
+    height: 52px;
+    background: rgba(255,255,255,0.1);
+    border-radius: var(--radius-full);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .swipe-thumb {
+    width: 44px;
+    height: 44px;
+    background: var(--c-accent);
+    border-radius: 50%;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    cursor: grab;
+    transition: left 0.1s linear;
+  }
+}

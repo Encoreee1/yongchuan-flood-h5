@@ -1,0 +1,241 @@
+/* ============================================
+   p4.css — 核心救援游戏样式
+   ============================================ */
+
+/* === 移动端 === */
+@media (max-width: 767px) {
+  .p4-bg {
+    background: linear-gradient(180deg, #1a2a1a 0%, #2a3a2a 40%, #3a4a3a 100%);
+  }
+
+  .p4-content {
+    justify-content: center;
+    gap: var(--sp-lg);
+    padding-top: 3vh;
+  }
+
+  .p4-header {
+    text-align: center;
+  }
+
+  .p4-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-md);
+    width: 100%;
+    max-width: 340px;
+  }
+
+  .p4-step-title {
+    font-size: var(--fs-base);
+    color: rgba(255,255,255,0.9);
+    font-weight: 500;
+  }
+
+  .p4-step-hint {
+    font-size: var(--fs-xs);
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* 拼图区 */
+  .p4-puzzle-area {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-md);
+    width: 100%;
+  }
+
+  .puzzle-pieces {
+    display: flex;
+    gap: var(--sp-sm);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .puzzle-piece {
+    width: 80px;
+    height: 80px;
+    background: rgba(255,255,255,0.12);
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.6rem;
+    cursor: grab;
+    transition: all var(--transition-fast);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+  }
+
+  .puzzle-piece:active {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-lg);
+    z-index: 10;
+  }
+
+  .puzzle-piece.placed {
+    opacity: 0.3;
+    pointer-events: none;
+    transform: scale(0.9);
+  }
+
+  .puzzle-slots {
+    display: flex;
+    gap: var(--sp-sm);
+    justify-content: center;
+  }
+
+  .puzzle-slot {
+    width: 80px;
+    height: 80px;
+    font-size: var(--fs-xs);
+    color: rgba(255,255,255,0.4);
+  }
+
+  .puzzle-slot.filled {
+    border-color: var(--c-success) !important;
+    color: var(--c-success);
+    background: rgba(13, 144, 79, 0.15);
+  }
+
+  /* 长按进度条 */
+  .long-press-progress {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0%;
+    height: 4px;
+    background: var(--c-success);
+    border-radius: 2px;
+    transition: width 0.1s linear;
+  }
+
+  /* 完成动画 */
+  .p4-complete {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-md);
+    animation: fadeInUp 0.6s ease;
+  }
+}
+
+/* === 桌面端 === */
+@media (min-width: 768px) {
+  .p4-bg {
+    background: linear-gradient(135deg, #1a2a1a 0%, #2a3a2a 50%, #3a4a3a 100%);
+  }
+
+  .p4-content {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-xl);
+  }
+
+  .p4-header {
+    text-align: center;
+  }
+
+  .p4-header .page-title {
+    text-align: center;
+    font-size: var(--fs-2xl);
+  }
+
+  .p4-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-lg);
+  }
+
+  .p4-step-title {
+    font-size: var(--fs-lg);
+    color: rgba(255,255,255,0.9);
+    font-weight: 500;
+  }
+
+  .p4-step-hint {
+    font-size: var(--fs-sm);
+    color: rgba(255,255,255,0.5);
+  }
+
+  .p4-puzzle-area {
+    display: flex;
+    gap: var(--sp-xl);
+    align-items: flex-start;
+  }
+
+  .puzzle-pieces {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-md);
+  }
+
+  .puzzle-piece {
+    width: 100px;
+    height: 100px;
+    background: rgba(255,255,255,0.12);
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.8rem;
+    cursor: grab;
+    transition: all var(--transition-fast);
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .puzzle-piece:hover {
+    background: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.6);
+  }
+
+  .puzzle-piece:active {
+    cursor: grabbing;
+    transform: scale(1.1);
+    box-shadow: var(--shadow-lg);
+    z-index: 10;
+  }
+
+  .puzzle-piece.placed {
+    opacity: 0.3;
+    pointer-events: none;
+    transform: scale(0.9);
+  }
+
+  .puzzle-slots {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-md);
+  }
+
+  .puzzle-slot {
+    width: 100px;
+    height: 100px;
+    font-size: var(--fs-sm);
+    color: rgba(255,255,255,0.4);
+  }
+
+  .puzzle-slot.filled {
+    border-color: var(--c-success) !important;
+    color: var(--c-success);
+    background: rgba(13, 144, 79, 0.15);
+  }
+
+  .p4-complete {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-lg);
+    animation: fadeInUp 0.6s ease;
+  }
+}

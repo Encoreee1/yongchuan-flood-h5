@@ -1,0 +1,59 @@
+<!-- 第 4 页 · 互动二：核心救援游戏 -->
+<div class="swiper-slide p4-slide">
+  <div class="bg-cover p4-bg"></div>
+  <div class="bg-overlay"></div>
+
+  <div class="page-content p4-content">
+    <div class="p4-header">
+      <h2 class="page-title" style="font-size: 1.5rem;">⛑️ 应急救援行动</h2>
+      <div class="step-indicator">
+        <span class="step-dot active" id="stepDot1"></span>
+        <span class="step-dot" id="stepDot2"></span>
+        <span class="step-dot" id="stepDot3"></span>
+      </div>
+    </div>
+
+    <!-- === 步骤1: 长按哨子 === -->
+    <div class="p4-step" id="p4Step1">
+      <p class="p4-step-title">第 1 步：长按哨子发出求救信号</p>
+      <div class="whistle-btn" id="whistleBtn">🪈<br><small>长按2秒</small></div>
+      <p class="p4-step-hint" id="step1Hint">按住哨子，坚持 2 秒</p>
+    </div>
+
+    <!-- === 步骤2: 拖拽拼图 === -->
+    <div class="p4-step" id="p4Step2" style="display: none;">
+      <p class="p4-step-title">第 2 步：清理路障，打通救援通道</p>
+      <div class="p4-puzzle-area">
+        <div class="puzzle-pieces" id="puzzlePieces">
+          <div class="puzzle-piece draggable" data-target="slot1" id="piece1">🪵<br><small>断木</small></div>
+          <div class="puzzle-piece draggable" data-target="slot2" id="piece2">🪨<br><small>落石</small></div>
+          <div class="puzzle-piece draggable" data-target="slot3" id="piece3">🚗<br><small>废车</small></div>
+        </div>
+        <div class="puzzle-slots" id="puzzleSlots">
+          <div class="drop-zone puzzle-slot" id="slot1" data-accept="piece1">放这里</div>
+          <div class="drop-zone puzzle-slot" id="slot2" data-accept="piece2">放这里</div>
+          <div class="drop-zone puzzle-slot" id="slot3" data-accept="piece3">放这里</div>
+        </div>
+      </div>
+      <p class="p4-step-hint" id="step2Hint">拖拽路障碎片到对应位置 (3/3)</p>
+    </div>
+
+    <!-- === 步骤3: 顺序点击 === -->
+    <div class="p4-step" id="p4Step4" style="display: none;">
+      <p class="p4-step-title">第 3 步：按正确顺序救助伤员</p>
+      <div class="order-buttons" id="orderButtons">
+        <button class="order-btn" data-order="1" id="orderBtn1">🤗 安抚</button>
+        <button class="order-btn" data-order="2" id="orderBtn2">🩹 包扎</button>
+        <button class="order-btn" data-order="3" id="orderBtn3">🚑 转移</button>
+      </div>
+      <p class="p4-step-hint" id="step3Hint">请按正确顺序操作：安抚 → 包扎 → 转移</p>
+    </div>
+
+    <!-- 救援完成 -->
+    <div class="p4-complete" id="p4Complete" style="display: none;">
+      <span style="font-size: 4rem;">🎉</span>
+      <p style="color: white; font-size: var(--fs-lg); font-weight: 600;">救援成功！</p>
+      <p style="color: rgba(255,255,255,0.7); font-size: var(--fs-sm);">急救物资已送达</p>
+    </div>
+  </div>
+</div>

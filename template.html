@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="description" content="暴雨永川 · 线上应急救援纪实 — 融合新闻报道与互动游戏的H5作品">
+<meta name="format-detection" content="telephone=no">
+<title>暴雨永川 · 线上应急救援纪实</title>
+
+<!-- Swiper.js CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+<!-- === CSS_PLACEHOLDER === -->
+
+</head>
+<body>
+
+<div class="swiper" id="h5-swiper">
+  <div class="swiper-wrapper">
+
+    <!-- PAGE_1_PLACEHOLDER -->
+    <!-- PAGE_2_PLACEHOLDER -->
+    <!-- PAGE_3_PLACEHOLDER -->
+    <!-- PAGE_4_PLACEHOLDER -->
+    <!-- PAGE_5_PLACEHOLDER -->
+    <!-- PAGE_6_PLACEHOLDER -->
+
+  </div>
+</div>
+
+<!-- Swiper.js JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<!-- qrcode.js for QR generation -->
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+<!-- === JS_PLACEHOLDER === -->
+
+<script>
+// Swiper 初始化
+const swiper = new Swiper('#h5-swiper', {
+  direction: 'vertical',
+  loop: false,
+  mousewheel: {
+    forceToAxis: true,
+    sensitivity: 1,
+    releaseOnEdges: false,
+  },
+  keyboard: {
+    enabled: true,
+    onlyInViewport: true,
+  },
+  pagination: false,
+  touchRatio: 1,
+  resistance: true,
+  resistanceRatio: 0,
+  speed: 400,
+  threshold: 10,
+  touchStartPreventDefault: false,
+  touchMoveStopPropagation: true,
+  on: {
+    slideChangeTransitionEnd: function () {
+      // 触发当前页面的激活事件
+      const activeSlide = this.slides[this.activeIndex];
+      const event = new CustomEvent('pageActivated', {
+        detail: { pageIndex: this.activeIndex }
+      });
+      activeSlide.dispatchEvent(event);
+    }
+  }
+});
+
+// 暴露 swiper 实例到全局
+window.H5_SWIPER = swiper;
+</script>
+
+</body>
+</html>

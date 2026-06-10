@@ -1,0 +1,133 @@
+/* ============================================
+   p6.css — 科普总结样式
+   ============================================ */
+
+/* === 移动端 === */
+@media (max-width: 767px) {
+  .p6-bg {
+    background: linear-gradient(180deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  }
+
+  .p6-content {
+    justify-content: center;
+    gap: var(--sp-lg);
+    padding: var(--sp-lg);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .p6-footer {
+    text-align: center;
+  }
+
+  .p6-qr-btn {
+    margin-top: var(--sp-md);
+    padding: 8px 20px;
+    font-size: var(--fs-sm);
+  }
+}
+
+/* === 桌面端 === */
+@media (min-width: 768px) {
+  .p6-bg {
+    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  }
+
+  .p6-content {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--sp-xl);
+    padding: var(--sp-xl) 8vw;
+  }
+
+  .p6-footer {
+    text-align: center;
+  }
+
+  .p6-qr-btn {
+    margin-top: var(--sp-md);
+    padding: 10px 24px;
+    font-size: var(--fs-base);
+  }
+}
+
+/* === QR 弹窗（共用）=== */
+.p6-qr-btn {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: var(--radius-full);
+  color: white;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.p6-qr-btn:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+.p6-qr-btn:active {
+  transform: scale(0.95);
+}
+
+.qr-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-modal-bg {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 0;
+}
+
+.qr-modal-content {
+  position: relative;
+  z-index: 1;
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--sp-xl);
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  max-width: 320px;
+  width: 90%;
+  animation: fadeInUp 0.3s ease;
+}
+
+.qr-modal-content h3 {
+  font-size: var(--fs-lg);
+  color: var(--c-text);
+  margin-bottom: var(--sp-md);
+}
+
+.qr-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: var(--fs-xl);
+  color: var(--c-text-light);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.qr-url {
+  font-size: var(--fs-xs);
+  color: var(--c-text-light);
+  margin-top: var(--sp-sm);
+  word-break: break-all;
+}
+
+#qrCode {
+  display: inline-block;
+}
+
+#qrCode canvas,
+#qrCode img {
+  width: 180px !important;
+  height: 180px !important;
+}

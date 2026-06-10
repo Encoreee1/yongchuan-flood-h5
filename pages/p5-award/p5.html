@@ -1,0 +1,61 @@
+<!-- 第 5 页 · 互动三：授旗领奖 -->
+<div class="swiper-slide p5-slide">
+  <div class="bg-cover p5-bg"></div>
+  <div class="bg-overlay"></div>
+
+  <div class="page-content p5-content">
+    <!-- 初始：提交救援成果 -->
+    <div class="p5-phase" id="p5Phase1">
+      <h2 class="page-title" style="font-size: 1.5rem;">🏆 救援行动完成</h2>
+      <div class="p5-stats">
+        <div class="p5-stat">
+          <span class="p5-stat-num">3/3</span>
+          <span class="p5-stat-label">救援步骤</span>
+        </div>
+        <div class="p5-stat">
+          <span class="p5-stat-num">100%</span>
+          <span class="p5-stat-label">完成度</span>
+        </div>
+        <div class="p5-stat">
+          <span class="p5-stat-num">A+</span>
+          <span class="p5-stat-label">评级</span>
+        </div>
+      </div>
+      <button class="btn-primary p5-submit-btn" id="p5SubmitBtn">📋 提交救援成果</button>
+    </div>
+
+    <!-- 揭幕奖状 -->
+    <div class="p5-phase" id="p5Phase2" style="display: none;">
+      <div class="unveil-container" id="unveilContainer">
+        <div class="certificate" id="certificate">
+          <h2>🏅 应急救援荣誉奖状</h2>
+          <p style="color: #5d4037; font-size: 0.9rem; margin: 8px 0;">
+            在"暴雨永川"应急救援行动中
+          </p>
+          <p style="color: #8b6914; font-size: 1.2rem; font-weight: 700;">
+            表现卓越，成功救助被困人员
+          </p>
+          <p style="color: #5d4037; font-size: 0.8rem; margin-top: 12px;">
+            特发此状，以资鼓励
+          </p>
+          <p style="color: #999; font-size: 0.7rem; margin-top: 16px;">
+            2026年6月 · 永川应急救援指挥部
+          </p>
+        </div>
+        <div class="unveil-cover" id="unveilCover">
+          <span>← 滑动揭幕 →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 分享动画 -->
+    <div class="p5-phase" id="p5Phase3" style="display: none;">
+      <div class="p5-share-area">
+        <span style="font-size: 4rem;">💌</span>
+        <p style="color: white; font-size: 1.2rem; font-weight: 600;">感谢你的勇敢行动！</p>
+        <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">致敬每一位暴雨中的守护者</p>
+        <button class="btn-primary" id="p5ShareBtn">📤 分享这份荣誉</button>
+      </div>
+    </div>
+  </div>
+</div>

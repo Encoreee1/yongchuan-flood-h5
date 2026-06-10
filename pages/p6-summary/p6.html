@@ -1,0 +1,65 @@
+<!-- 第 6 页 · 科普总结 -->
+<div class="swiper-slide p6-slide">
+  <div class="bg-cover p6-bg"></div>
+  <div class="bg-overlay"></div>
+
+  <div class="page-content p6-content">
+    <h2 class="page-title" style="text-align: center; font-size: 1.4rem;">暴雨无情，应急有术</h2>
+
+    <!-- 自救知识卡片 -->
+    <div class="knowledge-cards">
+      <div class="knowledge-card">
+        <span class="icon-lg">🏠</span>
+        <h3>暴雨来临前</h3>
+        <p>关注天气预报，远离河岸低洼地带。备好应急包（水、食物、药品、手电筒、哨子），熟悉安全撤离路线。</p>
+      </div>
+      <div class="knowledge-card">
+        <span class="icon-lg">⚠️</span>
+        <h3>洪水暴发时</h3>
+        <p>立刻向高处转移，不要在桥上或河道旁停留。若被困，发出求救信号（哨声、灯光、鲜艳衣物），保存体力等待救援。</p>
+      </div>
+      <div class="knowledge-card">
+        <span class="icon-lg">🩹</span>
+        <h3>灾后自救</h3>
+        <p>不喝生水、不吃洪水浸泡过的食物。检查房屋结构安全后再进入。关注官方发布的防疫信息，配合消杀工作。</p>
+      </div>
+    </div>
+
+    <!-- 数据来源 + AI 标注 -->
+    <div class="p6-footer">
+      <p class="source-note" style="margin-bottom: 8px;">
+        📰 数据来源：
+        <a href="https://www.news.cn/20260524/46943a04d21048ad9fb9f523f3794d7b/c.html" target="_blank">新华网</a>
+        ·
+        <a href="http://news.youth.cn/jsxw/202605/t20260525_16678215.htm" target="_blank">中国青年报</a>
+        ·
+        <a href="https://news.ifeng.com/c/8tNu1QJQVZ3" target="_blank">凤凰网</a>
+        ·
+        <a href="https://m.thepaper.cn/newsDetail_forward_33223119" target="_blank">澎湃新闻</a>
+        ·
+        永川发布
+      </p>
+      <p class="source-note">
+        <span class="ai-label">AI 生成 · 通义万相</span>
+        &nbsp;本作品背景图片由阿里云百炼 · 通义万相生成，已在各页标注
+      </p>
+      <p class="source-note" style="margin-top: 8px; color: rgba(255,255,255,0.35);">
+        通过模拟救援，掌握求生、救助小知识<br>致敬暴雨中所有守护者 🕯️
+      </p>
+
+      <!-- QR 码 -->
+      <button class="p6-qr-btn" id="p6QrBtn">📱 扫码查看</button>
+    </div>
+  </div>
+
+  <!-- QR 码弹窗 -->
+  <div class="qr-modal" id="qrModal" style="display: none;">
+    <div class="qr-modal-bg" id="qrModalBg"></div>
+    <div class="qr-modal-content">
+      <span class="qr-close" id="qrClose">✕</span>
+      <h3>扫码查看完整作品</h3>
+      <div id="qrCode"></div>
+      <p class="qr-url" id="qrUrl"></p>
+    </div>
+  </div>
+</div>
