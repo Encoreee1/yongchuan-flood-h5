@@ -25,69 +25,68 @@ function initP5() {
       phase2.style.display = 'flex';
     }
     submitBtn.addEventListener('click', handleSubmit);
-    submitBtn.addEventListener('touchend', (e) => {
-      e.preventDefault();
-      handleSubmit(e);
-    });
+    submitBtn.addEventListener('touchend', (e) => { e.preventDefault(); handleSubmit(e); });
   }
 
   // === 交互2: 滑动揭幕 ===
-  if (unveilCover) {
-    let isDragging = false;
-    let startY = 0;
-    let currentOffset = 0;
+  let unveilDragging = false;
+  let unveilStart = 0;
+  let unveilOffset = 0;
+
+  function unveilStartDrag(e) {
+    unveilDragging = true;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    unveilStart = clientY - unveilOffset;
+    unveilCover.style.transition = 'none';
+    if (e.cancelable) e.preventDefault();
+  }
+
+  function unveilMove(e) {
+    if (!unveilDragging) return;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    const container = slide.querySelector('#unveilContainer');
+    const maxOffset = container ? container.offsetHeight * 0.85 : 170;
+    unveilOffset = Math.max(0, Math.min(maxOffset, clientY - unveilStart));
+    unveilCover.style.transform = `translateY(${unveilOffset}px)`;
+  }
+
+  function unveilEnd() {
+    if (!unveilDragging) return;
+    unveilDragging = false;
+    unveilCover.style.transition = 'transform 0.3s ease';
+
     const container = slide.querySelector('#unveilContainer');
     const maxOffset = container ? container.offsetHeight * 0.85 : 170;
 
-    function onDragStart(e) {
-      isDragging = true;
-      startY = (e.touches ? e.touches[0].clientY : e.clientY) - currentOffset;
-      unveilCover.style.transition = 'none';
-    }
-
-    function onDragMove(e) {
-      if (!isDragging) return;
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      currentOffset = Math.max(0, Math.min(maxOffset, clientY - startY));
-      unveilCover.style.transform = `translateY(${currentOffset}px)`;
-    }
-
-    function onDragEnd() {
-      if (!isDragging) return;
-      isDragging = false;
-      unveilCover.style.transition = 'transform 0.3s ease';
-
-      if (currentOffset >= maxOffset * 0.6) {
-        // 揭幕完成
-        unveilCover.style.transform = `translateY(${maxOffset + 50}px)`;
-        unveilCover.style.opacity = '0';
-        AudioEngine.playSuccess();
-
+    if (unveilOffset >= maxOffset * 0.6) {
+      unveilCover.style.transform = `translateY(${maxOffset + 50}px)`;
+      unveilCover.style.opacity = '0';
+      AudioEngine.playSuccess();
+      setTimeout(() => {
+        unveilCover.style.display = 'none';
         setTimeout(() => {
-          unveilCover.style.display = 'none';
-          // 显示分享
-          setTimeout(() => {
-            phase2.style.display = 'none';
-            phase3.style.display = 'flex';
-            launchConfetti();
-          }, 800);
-        }, 300);
-      } else {
-        // 弹回
-        currentOffset = 0;
-        unveilCover.style.transform = 'translateY(0)';
-      }
+          phase2.style.display = 'none';
+          phase3.style.display = 'flex';
+          launchConfetti();
+        }, 800);
+      }, 300);
+    } else {
+      unveilOffset = 0;
+      unveilCover.style.transform = 'translateY(0)';
     }
-
-    unveilCover.addEventListener('mousedown', onDragStart);
-    unveilCover.addEventListener('touchstart', onDragStart, { passive: false });
-    document.addEventListener('mousemove', (e) => { if (isDragging) onDragMove(e); });
-    document.addEventListener('touchmove', (e) => {
-      if (isDragging) { e.preventDefault(); onDragMove(e); }
-    }, { passive: false });
-    document.addEventListener('mouseup', onDragEnd);
-    document.addEventListener('touchend', onDragEnd);
   }
+
+  if (unveilCover) {
+    unveilCover.addEventListener('mousedown', unveilStartDrag);
+    unveilCover.addEventListener('touchstart', unveilStartDrag, { passive: false });
+  }
+
+  // 全局 move/end（仅揭幕状态时生效）
+  document.addEventListener('mousemove', unveilMove);
+  document.addEventListener('mouseup', unveilEnd);
+  document.addEventListener('touchmove', (e) => { if (unveilDragging) unveilMove(e); }, { passive: false });
+  document.addEventListener('touchend', unveilEnd);
+  document.addEventListener('touchcancel', unveilEnd);
 
   // === 交互3: 分享动画 (CSS Confetti) ===
   function launchConfetti() {
@@ -99,7 +98,7 @@ function initP5() {
       const piece = document.createElement('div');
       piece.className = 'confetti-piece';
       piece.style.left = Math.random() * 100 + '%';
-      piece.style.top = -(Math.random() * 20) + 'px';
+      piece.style.top = -(Math.random() * 20 + 5) + 'px';
       piece.style.width = (Math.random() * 10 + 5) + 'px';
       piece.style.height = (Math.random() * 10 + 5) + 'px';
       piece.style.background = colors[Math.floor(Math.random() * colors.length)];
@@ -108,10 +107,7 @@ function initP5() {
       piece.style.animationDelay = Math.random() * 0.8 + 's';
       frag.appendChild(piece);
     }
-
     document.body.appendChild(frag);
-
-    // 清理
     setTimeout(() => {
       document.querySelectorAll('.confetti-piece').forEach(p => p.remove());
     }, 3500);
@@ -122,7 +118,6 @@ function initP5() {
     shareBtn.addEventListener('click', () => {
       launchConfetti();
       AudioEngine.playSuccess();
-      // 尝试调用系统分享
       if (navigator.share) {
         navigator.share({
           title: '暴雨永川 · 线上应急救援纪实',
@@ -131,10 +126,7 @@ function initP5() {
         }).catch(() => {});
       }
     });
-    shareBtn.addEventListener('touchend', (e) => {
-      e.preventDefault();
-      shareBtn.click();
-    });
+    shareBtn.addEventListener('touchend', (e) => { e.preventDefault(); shareBtn.click(); });
   }
 }
 

@@ -12,17 +12,17 @@ function initP4() {
   // Steps
   const step1 = slide.querySelector('#p4Step1');
   const step2 = slide.querySelector('#p4Step2');
-  const step4 = slide.querySelector('#p4Step4');
+  const step3El = slide.querySelector('#p4Step4'); // p4Step4 in HTML
   const complete = slide.querySelector('#p4Complete');
   const stepDots = slide.querySelectorAll('.step-dot');
 
   function goToStep(n) {
-    [step1, step2, step4].forEach(s => { if (s) s.style.display = 'none'; });
+    [step1, step2, step3El].forEach(s => { if (s) s.style.display = 'none'; });
     stepDots.forEach(d => { d.classList.remove('active'); d.classList.add('done'); });
 
     if (n === 1) { step1.style.display = 'flex'; stepDots[0].classList.add('active'); stepDots[0].classList.remove('done'); }
     if (n === 2) { step2.style.display = 'flex'; stepDots[1].classList.add('active'); }
-    if (n === 3) { step4.style.display = 'flex'; stepDots[2].classList.add('active'); }
+    if (n === 3) { step3El.style.display = 'flex'; stepDots[2].classList.add('active'); }
   }
 
   // === 交互1: 长按哨子 ===
@@ -42,7 +42,6 @@ function initP4() {
 
       pressTimer = setTimeout(() => {
         if (isPressing) {
-          // 长按成功！
           whistleBtn.classList.remove('pressing');
           whistleBtn.style.background = 'var(--c-success)';
           whistleBtn.innerHTML = '✓<br><small>求救信号已发出</small>';
@@ -73,131 +72,92 @@ function initP4() {
     whistleBtn.addEventListener('touchcancel', endPress);
   }
 
-  // === 交互2: 拖拽拼图 ===
+  // === 交互2: 拖拽拼图（统一全局监听器） ===
   const step2Hint = slide.querySelector('#step2Hint');
   let placedCount = 0;
+  let activeDrag = { isDragging: false, piece: null, clone: null };
 
   const pieces = slide.querySelectorAll('.puzzle-piece');
   const slots = slide.querySelectorAll('.puzzle-slot');
 
+  function getEventPos(e) {
+    if (e.touches) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    return { x: e.clientX, y: e.clientY };
+  }
+
+  function startDrag(piece, e) {
+    if (piece.classList.contains('placed')) return;
+    activeDrag.isDragging = true;
+    activeDrag.piece = piece;
+    piece.style.opacity = '0.3';
+
+    const clone = piece.cloneNode(true);
+    clone.style.position = 'fixed';
+    clone.style.zIndex = '100';
+    clone.style.pointerEvents = 'none';
+    clone.style.opacity = '0.85';
+    clone.style.transform = 'scale(1.1)';
+    const pos = getEventPos(e);
+    clone.style.left = (pos.x - 40) + 'px';
+    clone.style.top = (pos.y - 40) + 'px';
+    document.body.appendChild(clone);
+    activeDrag.clone = clone;
+
+    if (e.cancelable) e.preventDefault();
+  }
+
+  function moveDrag(e) {
+    if (!activeDrag.isDragging || !activeDrag.clone) return;
+    const pos = getEventPos(e);
+    activeDrag.clone.style.left = (pos.x - 40) + 'px';
+    activeDrag.clone.style.top = (pos.y - 40) + 'px';
+  }
+
+  function endDrag(e) {
+    if (!activeDrag.isDragging) return;
+    activeDrag.isDragging = false;
+
+    if (activeDrag.clone) {
+      const rect = activeDrag.clone.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      document.body.removeChild(activeDrag.clone);
+      activeDrag.clone = null;
+
+      const targetSlot = Array.from(slots).find(slot => {
+        const sr = slot.getBoundingClientRect();
+        return cx > sr.left && cx < sr.right && cy > sr.top && cy < sr.bottom;
+      });
+
+      if (targetSlot && activeDrag.piece && targetSlot.dataset.accept === activeDrag.piece.dataset.target) {
+        placePiece(activeDrag.piece, targetSlot);
+      } else if (activeDrag.piece) {
+        activeDrag.piece.style.opacity = '';
+      }
+      activeDrag.piece = null;
+    }
+  }
+
+  // 每个碎片绑定 touchstart / mousedown（只在碎片上触发）
   pieces.forEach(piece => {
+    piece.addEventListener('touchstart', (e) => { startDrag(piece, e); }, { passive: false });
+    piece.addEventListener('mousedown', (e) => { startDrag(piece, e); });
+    // 原生 HTML5 drag（桌面端备选）
     piece.addEventListener('dragstart', (e) => {
       e.dataTransfer.setData('text/plain', piece.id);
       piece.style.opacity = '0.5';
     });
-    piece.addEventListener('dragend', () => {
-      piece.style.opacity = '';
-    });
-
-    // Touch drag support
-    let isDragging = false;
-    let clone = null;
-    let startX, startY, origLeft, origTop;
-
-    piece.addEventListener('touchstart', function(e) {
-      if (piece.classList.contains('placed')) return;
-      isDragging = true;
-      const touch = e.touches[0];
-      startX = touch.clientX;
-      startY = touch.clientY;
-      const rect = piece.getBoundingClientRect();
-      origLeft = rect.left;
-      origTop = rect.top;
-
-      clone = piece.cloneNode(true);
-      clone.style.position = 'fixed';
-      clone.style.left = origLeft + 'px';
-      clone.style.top = origTop + 'px';
-      clone.style.zIndex = '100';
-      clone.style.pointerEvents = 'none';
-      clone.style.opacity = '0.8';
-      clone.style.transform = 'scale(1.1)';
-      document.body.appendChild(clone);
-
-      piece.style.opacity = '0.3';
-      e.preventDefault();
-    }, { passive: false });
-
-    document.addEventListener('touchmove', function(e) {
-      if (!isDragging || !clone) return;
-      const touch = e.touches[0];
-      clone.style.left = (touch.clientX - 40) + 'px';
-      clone.style.top = (touch.clientY - 40) + 'px';
-    });
-
-    document.addEventListener('touchend', function(e) {
-      if (!isDragging) return;
-      isDragging = false;
-
-      if (clone) {
-        const cx = clone.getBoundingClientRect().left + 40;
-        const cy = clone.getBoundingClientRect().top + 40;
-        document.body.removeChild(clone);
-        clone = null;
-
-        // 检测是否放在正确的 slot 上
-        const targetSlot = Array.from(slots).find(slot => {
-          const sr = slot.getBoundingClientRect();
-          return cx > sr.left && cx < sr.right && cy > sr.top && cy < sr.bottom;
-        });
-
-        if (targetSlot && targetSlot.dataset.accept === piece.dataset.target) {
-          placePiece(piece, targetSlot);
-        } else {
-          piece.style.opacity = '';
-        }
-      }
-    });
-
-    piece.addEventListener('mousedown', function(e) {
-      if (piece.classList.contains('placed')) return;
-      isDragging = true;
-      const rect = piece.getBoundingClientRect();
-      origLeft = rect.left;
-      origTop = rect.top;
-
-      clone = piece.cloneNode(true);
-      clone.style.position = 'fixed';
-      clone.style.left = origLeft + 'px';
-      clone.style.top = origTop + 'px';
-      clone.style.zIndex = '100';
-      clone.style.pointerEvents = 'none';
-      clone.style.opacity = '0.8';
-      clone.style.transform = 'scale(1.1)';
-      document.body.appendChild(clone);
-      piece.style.opacity = '0.3';
-    });
-
-    document.addEventListener('mousemove', function(e) {
-      if (!isDragging || !clone) return;
-      clone.style.left = (e.clientX - 40) + 'px';
-      clone.style.top = (e.clientY - 40) + 'px';
-    });
-
-    document.addEventListener('mouseup', function(e) {
-      if (!isDragging) return;
-      isDragging = false;
-      if (clone) {
-        const cx = e.clientX;
-        const cy = e.clientY;
-        document.body.removeChild(clone);
-        clone = null;
-
-        const targetSlot = Array.from(slots).find(slot => {
-          const sr = slot.getBoundingClientRect();
-          return cx > sr.left && cx < sr.right && cy > sr.top && cy < sr.bottom;
-        });
-
-        if (targetSlot && targetSlot.dataset.accept === piece.dataset.target) {
-          placePiece(piece, targetSlot);
-        } else {
-          piece.style.opacity = '';
-        }
-      }
-    });
+    piece.addEventListener('dragend', () => { piece.style.opacity = ''; });
   });
 
-  // 也支持 slots 的 drop 事件（原生拖拽）
+  // 全局只注册一次 move/end 监听器，通过 activeDrag 判断是否在处理拖拽
+  document.addEventListener('touchmove', (e) => { if (activeDrag.isDragging) moveDrag(e); }, { passive: false });
+  document.addEventListener('touchend', endDrag);
+  document.addEventListener('touchcancel', endDrag);
+  document.addEventListener('mousemove', (e) => { if (activeDrag.isDragging) moveDrag(e); });
+  document.addEventListener('mouseup', endDrag);
+
+  // slot 原生 drop
   slots.forEach(slot => {
     slot.addEventListener('dragover', (e) => { e.preventDefault(); });
     slot.addEventListener('drop', (e) => {
@@ -239,23 +199,22 @@ function initP4() {
 
       if (pressed === expected) {
         btn.classList.add('correct');
-        btn.textContent = btn.textContent.replace(/^[🤗🩹🚑]/, '✓');
+        btn.textContent = btn.textContent.replace(/^[^\s]+/, '✓');
         currentOrder++;
         AudioEngine.playClick();
 
         if (currentOrder === 1) step3Hint.textContent = '正确！接下来：包扎 → 转移';
-        if (currentOrder === 2) step3Hint.textContent = '正确！最后一步：转移';
+        else if (currentOrder === 2) step3Hint.textContent = '正确！最后一步：转移';
 
         if (currentOrder >= 3) {
-          // 全部正确！
           AudioEngine.playSuccess();
           stepDots[2].classList.remove('active');
           stepDots[2].classList.add('done');
-          step4.style.display = 'none';
+          step3El.style.display = 'none';
           complete.style.display = 'flex';
-          // 自动播放急救物资动画
           setTimeout(() => {
-            complete.querySelector('p:last-child').textContent = '🩹 绷带 · 💧 饮用水 · 🍞 食物 — 已送达';
+            const lastP = complete.querySelector('p:last-child');
+            if (lastP) lastP.textContent = '🩹 绷带 · 💧 饮用水 · 🍞 食物 — 已送达';
           }, 500);
         }
       } else {
@@ -266,17 +225,11 @@ function initP4() {
       }
     });
 
-    // Touch
-    btn.addEventListener('touchend', (e) => {
-      e.preventDefault();
-      btn.click();
-    });
+    btn.addEventListener('touchend', (e) => { e.preventDefault(); btn.click(); });
   });
 
-  // === 页面激活重置 ===
-  slide.addEventListener('pageActivated', () => {
-    // 不重置，保留进度，用户翻回来可继续
-  });
+  // 页面激活
+  slide.addEventListener('pageActivated', () => {});
 }
 
 document.addEventListener('DOMContentLoaded', initP4);
